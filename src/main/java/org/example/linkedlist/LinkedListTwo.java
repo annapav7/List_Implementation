@@ -11,8 +11,6 @@ public class LinkedListTwo {
             Node next;
         }
 
-    Node newNode = new Node();
-
 
         public LinkedListTwo() {
             first = null;
@@ -20,11 +18,14 @@ public class LinkedListTwo {
         }
 
         public boolean isEmpty() {
+
             return first == null;
         }
 
         // Method to insert a node at a specific position
         public void insertAt(int data, int position) {
+
+            Node newNode = new Node();
             newNode.data = data;
 
             if (position < 0) {
@@ -35,10 +36,10 @@ public class LinkedListTwo {
                 // Insert at the beginning
                 newNode.next = first;
                 first = newNode;
-//                if (last == null) {
-//                    // If the list was empty, update the last reference as well
-//                    last = newNode;
-//                }
+                if (last == null) {
+                    // If the list was empty, update the last reference as well
+                    last = newNode;
+                }
             } else {
                 int index = 0;
                 Node current = first;
@@ -49,9 +50,9 @@ public class LinkedListTwo {
                     index++;
                 }
 
-//                if (current == null) {
-//                    throw new IndexOutOfBoundsException("Position out of bounds.");
-//                }
+                if (current == null) {
+                    throw new IndexOutOfBoundsException("Position out of bounds.");
+                }
 
                 // Insert new node at the desired position
                 newNode.next = current.next;

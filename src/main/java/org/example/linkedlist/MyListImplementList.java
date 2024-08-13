@@ -4,14 +4,21 @@ import java.util.*;
 
 
 
-    public class MyList<E> implements List<E> {
+    public class MyListImplementList<E> implements List<E> {
         private Object[] elements;
         private int size;
-        private static final int DEFAULT_CAPACITY = 10;
+        private final int DEFAULT_CAPACITY = 10;
 
-        public MyList() {
+        public MyListImplementList() {
             elements = new Object[DEFAULT_CAPACITY];
             size = 0;
+        }
+
+        private void ensureCapacity() {
+            if (size == elements.length) {
+                int newCapacity = elements.length * 2;
+                elements = Arrays.copyOf(elements, newCapacity);
+            }
         }
 
         @Override
@@ -69,36 +76,43 @@ import java.util.*;
 
         @Override
         public boolean containsAll(Collection<?> c) {
+
             return false;
         }
 
         @Override
         public boolean contains(Object o) {
+
             return indexOf(o) >= 0;
         }
 
         @Override
         public Iterator<E> iterator() {
+
             return null;
         }
 
         @Override
         public Object[] toArray() {
+
             return new Object[0];
         }
 
         @Override
         public <T> T[] toArray(T[] a) {
+
             return null;
         }
 
         @Override
         public int size() {
+
             return size;
         }
 
         @Override
         public boolean isEmpty() {
+
             return size == 0;
         }
 
@@ -130,6 +144,7 @@ import java.util.*;
 
         @Override
         public ListIterator<E> listIterator() {
+
             return listIterator(0);
         }
 
@@ -170,11 +185,13 @@ import java.util.*;
 
                 @Override
                 public int nextIndex() {
+
                     return cursor;
                 }
 
                 @Override
                 public int previousIndex() {
+
                     return cursor - 1;
                 }
 
@@ -183,7 +200,7 @@ import java.util.*;
                     if (lastRet < 0) {
                         throw new IllegalStateException();
                     }
-                    MyList.this.remove(lastRet);
+                    MyListImplementList.this.remove(lastRet);
                     cursor = lastRet;
                     lastRet = -1;
                 }
@@ -193,12 +210,12 @@ import java.util.*;
                     if (lastRet < 0) {
                         throw new IllegalStateException();
                     }
-                    MyList.this.set(lastRet, e);
+                    MyListImplementList.this.set(lastRet, e);
                 }
 
                 @Override
                 public void add(E e) {
-                    MyList.this.add(cursor++, e);
+                    MyListImplementList.this.add(cursor++, e);
                     lastRet = -1;
                 }
             };
@@ -219,7 +236,7 @@ import java.util.*;
             rangeCheckForAdd(index);
             Object[] arr = c.toArray();
             int numNew = arr.length;
-            ensureCapacity(size + numNew);
+            ensureCapacity();
             int numMoved = size - index;
             if (numMoved > 0) {
                 System.arraycopy(elements, index, elements, index + numNew, numMoved);
@@ -264,7 +281,7 @@ import java.util.*;
             if (fromIndex > toIndex) {
                 throw new IllegalArgumentException("fromIndex > toIndex");
             }
-            return new MyList<E>() {
+            return new MyListImplementList<E>() {
                 {
                     for (int i = fromIndex; i < toIndex; i++) {
                         add((E) elements[i]);
@@ -273,36 +290,34 @@ import java.util.*;
 
                 @Override
                 public boolean add(E e) {
+
                     throw new UnsupportedOperationException();
                 }
 
                 @Override
                 public E set(int index, E element) {
+
                     throw new UnsupportedOperationException();
                 }
 
                 @Override
                 public void add(int index, E element) {
+
                     throw new UnsupportedOperationException();
                 }
 
                 @Override
                 public E remove(int index) {
+
                     throw new UnsupportedOperationException();
                 }
 
                 @Override
                 public void clear() {
+
                     throw new UnsupportedOperationException();
                 }
             };
-        }
-
-        private void ensureCapacity() {
-            if (size == elements.length) {
-                int newCapacity = elements.length * 2;
-                elements = Arrays.copyOf(elements, newCapacity);
-            }
         }
 
         private void rangeCheck(int index) {
